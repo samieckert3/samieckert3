@@ -1,0 +1,40 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Jan 30 16:44:52 2022
+
+@author: samie
+"""
+            
+            
+import numpy as np
+import matplotlib.pyplot as plt
+def my_lagrange(x,y,X):
+
+    Y = 0
+    for i in range(len(x)):
+        P=1
+        for j in range(len(x)):
+            if i != j:
+                Px=X-x[j] 
+                #print(X)
+                Dx=x[i]-x[j]
+                #print(Dx)
+                P=P*Px/Dx
+                #print(f"X{X}:ZY{Y}")
+                Y = (y[i]*P + Y)
+                return Y
+x=[0,1,2,3,4]
+y=[2,1,3,5,1]
+X=np.linspace(0,4,101)
+
+
+#print(len(X))
+plt.figure(figsize=(10,8))
+plt.plot(X,my_lagrange(x,y,X),"b",label="interpolation")
+plt.plot(x,y,"ro",label="data points")
+plt.xlabel("X")
+plt.ylabel("Y")
+plt.title("Lagrange Interpolation of Data Points")
+plt.legend()
+plt.show() 
+            
