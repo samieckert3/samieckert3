@@ -1,0 +1,31 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Feb  6 23:10:12 2022
+
+@author: samie
+"""
+import numpy as np
+def my_newton(f, df, x0, tol):
+    R=[]
+    E=[]
+    R.append(x0)
+    E.append(abs(f(R[-1])))
+    limit = 100
+    i = 0
+    while i < limit:
+        R.append(x0 - (f(x0)/df(x0)))
+        E.append(abs(f(R[-1])))
+        if E[-1]<tol:
+            return [R,E]
+        
+        #Test_1
+        f=lambda x: x**2-2
+        df=lambda x: 2*x
+        [R,E] = my_newton(f,df,1,1e-5)
+        print([R,E])
+        
+        #Test_2
+        f=lambda x: np.sin(x) - np.cos(x)
+        df=lambda x: np.cos(x) + np.sin(x)
+        [R,E]=my_newton(f,df,1,1e-5)
+        print([R,E])
