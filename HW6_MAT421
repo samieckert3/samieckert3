@@ -1,0 +1,21 @@
+@author: samie
+"""
+'Question 1'
+def my_Cylinder(r,h):
+    pi=22/7
+    return ((2*pi*r*r+2*pi*r*h),pi*r*r*h)
+print(my_Cylinder(1, 5))
+
+
+'Question 2'
+def add_string(s1,s2):
+    s1 = add_string('Programming',' ');
+    s2 = add_string('is','fun!');
+    for i in range(0, add_string(s1, s2)):
+       if i%2 == 0:
+           s1 += add_string(s1,s2)[i];
+       else:
+           s2 += add_string(s1,s2)[i];
+           return (s1, s2);
+       s1 = add_string('Programming',' ')
+       s2 = add_string('is','fun!')
