@@ -1,0 +1,41 @@
+import numpy as np
+import matplotlib.pyplot as plt
+def my_der_calc(f,a,b,N,option):
+    n=N
+    x=np.linspace(a,b,n)
+    if option == "forward":
+        X=x[0:n-1]
+        df=(f(x[1:n])-f(x[0:n-1]))/(x[1:n]-x[0:n-1])
+    elif option == "backward":
+        X=x[1:n]
+        df=(f(x[1:n])-f(x[0:n-1]))/(x[1:n]-x[0:n-1])
+    else:
+        X=x[1:n-1]
+        df=(f(x[2:n])-f(x[0:n-2]))/(x[2:n]-x[0:n-2])
+        return df,X
+    def plot_graph(df,X):
+        plt.figure(figsize=(12,8))
+        plt.plot(X,df,label="central")
+        plt.plot(x,np.cos(x),label="Inquiry")
+        plt.plot(X,df,label="forward")
+        plt.legend()
+        plt.title("Sine derivations")
+        plt.xlabel("X")
+        plt.ylabel("Y")
+        plt.show()
+        x=np.linspace(0,2*np.pi,100)
+        f=lambda x:np.sin(x)
+        print ("Enter Values:\n 1.forward\n 2.backward\n 3.central\n")
+        option=input()
+        if option == "forward":
+            [df,X]=my_der_calc(f,0,2*np.pi,10,"backward")
+            plot_graph(df,X)
+        elif option == "central":
+            [df,X]=my_der_calc(f,0,2*np.pi,10,"central")
+            plot_graph(df,X)
+            else:
+                
+                print("Check values")
+                exit(1)
+                
+
