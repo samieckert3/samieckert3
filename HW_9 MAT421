@@ -1,0 +1,41 @@
+
+@author: samie
+"""
+import numpy as np
+from scipy.integrate import quad
+import matplotlib.pyplot as plt
+def my_fourier_coef(f,n):
+    def F1(x):
+        return np.cos(n*x)*f(x)
+    def F2(x):
+        return np.sin(n*x)*f(x)
+    A_n=quad(F1,-np.pi,np.pi)[0]
+    B_n=quad(F2,-np.pi,np.pi)[0]
+    return [A_n / np.pi,B_n / np.pi]
+def plot_results(f,N):
+    x=np.linspace(-np.pi,np.pi,10000)
+    [A0,B0]=my_fourier_coef(f,0)
+    y=A0*np.ones(len(x))/2
+    for n in range(1,N):
+        [An,Bn]=my_fourier_coef(f,n)
+        y+=An*np.cos(n*x)+Bn*np.sin(n*x)
+        plt.figure(figsize=(10,6))
+        plt.plot(x,f(x),label="analytic")
+        plt.plot(x,y,label="approximate")
+        plt.xlabel("x")
+        plt.ylabel("y")
+        plt.grid()
+        plt.legend()
+        plt.title(f"{N}th Order Fourier Approximation")
+        plt.show()
+        f=lambda x:np.sin(np.exp(x))
+        N=2
+        plot_results(f,N)
+        f=lambda x:np.mod(x,np.pi/2)
+        N=5
+        plot_results(f,N)
+        N=20
+        plot_results(f,N)
+        f=lambda x:(x>-np.pi/2)&(x<np.pi/2)
+        N=2
+
