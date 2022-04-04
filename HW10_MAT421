@@ -1,0 +1,43 @@
+def my_msd(t, S, m, c, k):
+    function [T,S]=myRK4(dS,tspan,S0)
+    T=tspan
+    h=T(2)-T(1);
+    N=length(T);
+    M=lengh(S0);
+    S=ones(N,M);
+    S(1,:)=S0;
+    for i=1:N-1
+    k1 = dS(T(i),S(i,:))';
+    k2 = dS(T(i)+h/2,S(i,:) + k1*h/2)';
+    k3 = dS(T(i)+h/2,S(i,:) + k2*h/2)';
+    k4 = dS(T(i)+h,S(i,:) + k3*h)';
+    phi = (k1+2*k2+2*k3+k4)/6;
+    S(i+1,:) = S(i,:) + phi*h;
+end
+end
+    return ds
+
+my_msd(0, [1, -1], 10, 1, 100)
+array([-1. , -9.9])
+m = 1
+k = 10
+f = partial(my_msd, m=m, c=0, k=k)
+t_e = np.arange(0, 20, 0.1)
+sol_1=solve_ivp(f,[0,20],[1,0],t_eval=t_e)
+
+f = partial(my_msd, m=m, c=1, k=k)
+sol_2=solve_ivp(f,[0,20],[1,0],t_eval=t_e)
+
+f = partial(my_msd, m=m, c=10, k=k)
+sol_3=solve_ivp(f,[0,20],[1,0],t_eval=t_e)
+
+plt.figure(figsize = (10, 8))
+plt.plot(sol_1.t, sol_1.y[0])
+plt.plot(sol_2.t, sol_2.y[0])
+plt.plot(sol_3.t, sol_3.y[0])
+plt.title('Numerical Solution of MSD \
+System with Varying Dampling')
+plt.xlabel('time')
+plt.ylabel('displacement')
+plt.legend(['no dampling', 'c=1', \
+           '>critically damped'], loc=1)
